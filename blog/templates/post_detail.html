@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <h1 style="font-weight: bold; text-align: center;">{{post.title}}</h1>
+    <img style="margin-left: 420px;" width="700px" src="{{post.image.url}}" alt="">
+    <p style="width: 700px; margin-left: 420px;">{{post.description}}</p>
+    <p style="width: 700px; margin-left: 420px;">{{post.created}}</p>
+
+{% endblock content %}
