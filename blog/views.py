@@ -51,3 +51,23 @@ def create_post(request):
     else:
         form=forms.BlogForm()
     return render(request,'create_post.html',{'form':form})
+
+
+def update_post(request,id):
+    model = models.Blog.objects.get(id=id)
+    form = forms.BlogForm(request.POST or None , request.FILES,instance=model)
+    if form.is_valid():
+        form.save()
+        return redirect('homepage')
+    return render(request,'update.html',{'form':form})
+
+def delete_post(request,id):
+    model = models.Blog.objects.get(id=id)
+    if request.method=='POST':
+        model.delete()
+        return redirect('homepage')
+    return render(request,'delete.html',{'model':model})
+
+
+
+
