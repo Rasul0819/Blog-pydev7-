@@ -7,5 +7,12 @@
     <img style="margin-left: 420px;" width="700px" src="{{post.image.url}}" alt="">
     <p style="width: 700px; margin-left: 420px;">{{post.description}}</p>
     <p style="width: 700px; margin-left: 420px;">{{post.created}}</p>
+    {% if request.user == post.author %}
+    <a href="{% url 'update_post' post.id %}">
+        <button type="button" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"></button>>Редактировать</button></a>
+    <a href="{% url 'delete_post' post.id %}">
+        <button type="button" class="text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg"></button>>Удалить</button>
+    </a>
+    {% endif %}
 
 {% endblock content %}

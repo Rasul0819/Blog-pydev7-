@@ -3,7 +3,8 @@ from django.contrib.auth import login,authenticate,logout
 from . import forms
 from django.contrib.auth.forms import AuthenticationForm
 from . import models
-
+#qollaniwshinin ozi oshire aliwi ushin
+from django.contrib.auth.decorators import login_required
 
 def homepage(request):
     posts = models.Blog.objects.all()
@@ -41,7 +42,7 @@ def log_out(request):
     logout(request)
     return redirect('homepage')
 
-
+@login_required
 def create_post(request):
     if request.method =='POST':
         form = forms.BlogForm(request.POST,request.FILES)
@@ -52,8 +53,11 @@ def create_post(request):
         form=forms.BlogForm()
     return render(request,'create_post.html',{'form':form})
 
-
+@login_required
 def update_post(request,id):
+    blog_post = get_object_or_404(models.Blog, id=id)
+    if blog_post.author != request.user:
+        return redirect('homepage')
     model = models.Blog.objects.get(id=id)
     form = forms.BlogForm(request.POST or None , request.FILES,instance=model)
     if form.is_valid():
@@ -61,7 +65,11 @@ def update_post(request,id):
         return redirect('homepage')
     return render(request,'update.html',{'form':form})
 
+@login_required
 def delete_post(request,id):
+    blog_post = get_object_or_404(models.Blog, id=id)
+    if blog_post.author != request.user:
+        return redirect('homepage')
     model = models.Blog.objects.get(id=id)
     if request.method=='POST':
         model.delete()

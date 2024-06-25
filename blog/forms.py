@@ -15,4 +15,4 @@ class LoginForm(AuthenticationForm):
 class BlogForm(forms.ModelForm):
     class Meta:
         model = models.Blog
-        fields = ('__all__')
+        fields = ('title', 'description', 'image','updated','author')
